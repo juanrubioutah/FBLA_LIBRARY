@@ -31,4 +31,11 @@ public class User {
 	public void checkIn(Book book){
 		
 	}
+	public int getID(){
+		return ID;
+	}
+	public String getName(){
+		return firstName+" "+lastName;
+	}
+
 }
