@@ -1,21 +1,17 @@
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class main {
-	public static Date today;
-	public static Calendar calendar = new GregorianCalendar(2017,8,10);
-	
 	public UserManager userManager = new UserManager();
 	public BookManager bookManager = new BookManager();
 	public static void main(String args[]){
 		
 		
-		//Testing Out Some Date Stuff...
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		Date date = new Date();
-		System.out.println(sdf.format(date));
-		System.out.println(date.before(date));
+		LocalDateTime ld = LocalDateTime.now(); //Returns the current date and time
+		
 	}
 	public UserManager getGlobalUserManager(){
 		return userManager;

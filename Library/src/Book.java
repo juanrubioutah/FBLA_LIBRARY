@@ -1,7 +1,7 @@
 import java.util.Date;
 
 public class Book {
-	public int ISBN;
+	public int IBSN;
 	public String title;
 	public String author;
 	public Date lastCheckout;
@@ -11,8 +11,8 @@ public class Book {
 	public boolean isOnHold;
 	public User holdUser;
 	
-	public Book(int ISBN, String title, String author){
-		this.ISBN = ISBN;
+	public Book(int IBSN, String title, String author){
+		this.IBSN = IBSN;
 		this.title = title;
 		this.author = author;
 		
@@ -31,5 +31,6 @@ public class Book {
 	public void checkIn(){
 		
 	}
+	
 	
 }
