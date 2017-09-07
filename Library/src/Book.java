@@ -31,6 +31,13 @@ public class Book {
 	public void checkIn(){
 		
 	}
-	
-	
+	public int getIBSN() {
+		return IBSN;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getAuthor() {
+		return author;
+	}
 }
