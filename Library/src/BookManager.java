@@ -28,4 +28,7 @@ public class BookManager {
 		}
 		return null; //no results
 	}
+	public Book getBookByIndex(int index) {
+		return books.get(index);
+	}
 }
