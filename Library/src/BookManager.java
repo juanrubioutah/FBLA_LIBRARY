@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BookManager {
-	public ArrayList<Book> books;
+	public static ArrayList<Book> books;
 	public BookManager() {
 		books = new ArrayList<Book>();
 	}
@@ -31,4 +31,17 @@ public class BookManager {
 	public Book getBookByIndex(int index) {
 		return books.get(index);
 	}
+	public static void checkOutBook(Book book) {
+		for(int i = 0; i<books.size(); i++) {
+			if(books.get(i)==book){
+				books.remove(i);
+				return;
+			}
+		}
+		System.out.println("Unable to find book to check out!");
+	}
+	public static void checkInBook(Book book) {
+		books.add(book);
+	}
+
 }

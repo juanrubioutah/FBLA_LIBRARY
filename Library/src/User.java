@@ -7,14 +7,14 @@ public class User {
 	public String lastName;
 	public double fineAmount;
 	public ArrayList<Book> checkedOutBooks;
-	public boolean isStudent;
+	public boolean isAdmin;
 	public LocalDateTime checkOutTime;
 	
-	public User(int ID, String firstName, String lastName, boolean isStudent){
+	public User(int ID, String firstName, String lastName, boolean isAdmin){
 		this.ID = ID;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.isStudent = isStudent;
+		this.isAdmin = isAdmin;
 		checkedOutBooks = new ArrayList<Book>();
 	}
 	
@@ -47,14 +47,24 @@ public class User {
 	}
 	public void checkIn(Book book){
 		LocalDateTime checkInTime = LocalDateTime.now();
-		checkedOutBooks.remove(book);
-		if((checkOutTime.plusWeeks(2)).compareTo(checkInTime)<=0) { //Book is returned on time
-			
+		if(isAdmin==true) {
+			checkedOutBooks.remove(book);
+			if((checkOutTime.plusWeeks(main.getAdminUserCheckOutWeeks())).compareTo(checkInTime)<=0) { //Book is returned on time
+				book.checkIn();
+			}
+			else if((checkOutTime.plusWeeks(main.getAdminUserCheckOutWeeks())).compareTo(checkInTime)>0) { //Book is returned late
+				fineAmount += 5; //TODO: make fine amounts vary based on how late the book is returned
+			}
 		}
-		else if((checkOutTime.plusWeeks(2)).compareTo(checkInTime)>0) { //Book is returned late
-			//Determine and assign fine amount
-			
-		}
+		else if(isAdmin==false) {
+			checkedOutBooks.remove(book);
+			if((checkOutTime.plusWeeks(main.getNormalUserCheckOutWeeks())).compareTo(checkInTime)<=0) { //Book is returned on time
+				book.checkIn();
+			}
+			else if((checkOutTime.plusWeeks(main.getNormalUserCheckOutWeeks())).compareTo(checkInTime)>0) { //Book is returned late
+				fineAmount += 5; //TODO: make fine amounts vary based on how late the book is returned
+			}
+		}	
 	}
 	public int getID(){
 		return ID;

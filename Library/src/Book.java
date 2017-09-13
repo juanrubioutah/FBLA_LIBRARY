@@ -1,15 +1,18 @@
 import java.util.Date;
 
 public class Book {
-	public int IBSN;
-	public String title;
-	public String author;
-	public Date lastCheckout;
-	public User lastUser;
-	public boolean isCheckedOut;
-	public Date dueDate;
-	public boolean isOnHold;
-	public User holdUser;
+	public static int IBSN;
+	public static String title;
+	public static String author;
+	public static Date lastCheckout;
+	public static User lastUser;
+	public static boolean isCheckedOut;
+	public static Date dueDate;
+	public static boolean isOnHold;
+	public static User holdUser;
+	
+	public static BookManager bookManager = main.getGlobalBookManager();
+	public static UserManager userManager = main.getGlobalUserManager();
 	
 	public Book(int IBSN, String title, String author){
 		this.IBSN = IBSN;
@@ -26,10 +29,10 @@ public class Book {
 	public void checkOut(User user){
 		lastUser = user;
 		isCheckedOut = true;
-		
+		bookManager.checkOutBook(this);
 	}
 	public void checkIn(){
-		
+		bookManager.checkInBook(this);
 	}
 	public int getIBSN() {
 		return IBSN;
