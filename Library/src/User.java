@@ -72,5 +72,8 @@ public class User {
 	public String getName(){
 		return firstName+" "+lastName;
 	}
+	public void payFine(int amountPaid) { //decrease the fine by 'amountPaid'
+		fineAmount = fineAmount-amountPaid;
+	}
 
 }

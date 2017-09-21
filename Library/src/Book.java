@@ -1,13 +1,14 @@
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Book {
 	public static int IBSN;
 	public static String title;
 	public static String author;
-	public static Date lastCheckout;
+	public static LocalDateTime lastCheckout;
 	public static User lastUser;
 	public static boolean isCheckedOut;
-	public static Date dueDate;
+	public static LocalDateTime dueDate;
 	public static boolean isOnHold;
 	public static User holdUser;
 	
@@ -30,6 +31,15 @@ public class Book {
 		lastUser = user;
 		isCheckedOut = true;
 		bookManager.checkOutBook(this);
+		lastCheckout = LocalDateTime.now();
+		if(user.isAdmin) {
+			dueDate = lastCheckout.plusWeeks(3);
+			return;
+		}
+		else {
+			dueDate = lastCheckout.plusWeeks(2);
+			return;
+		}
 	}
 	public void checkIn(){
 		bookManager.checkInBook(this);
@@ -42,5 +52,20 @@ public class Book {
 	}
 	public String getAuthor() {
 		return author;
+	}
+	public LocalDateTime getDueDate() {
+		return dueDate;
+	}
+	public void hold(User user) {
+		if(isOnHold == false) { //Make sure the book isn't already on hold
+			isOnHold = true;
+			holdUser = user;
+			System.out.println("Expected hold date: "+dueDate);
+			return;
+		}
+		if(isOnHold == true) {
+			System.out.println("Book is already on hold!");
+			return;
+		}
 	}
 }
