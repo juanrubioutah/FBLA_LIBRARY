@@ -13,6 +13,8 @@ public class main {
 		
 		
 		LocalDateTime ld = LocalDateTime.now(); //Returns the current date and time
+		GUI gui = new GUI();
+		gui.init();
 		
 	}
 	public static UserManager getGlobalUserManager(){
