@@ -5,7 +5,7 @@ public class BookManager {
 	public BookManager() {
 		books = new ArrayList<Book>();
 	}
-	public void add(Book book) {
+	public static void add(Book book) {
 		books.add(book);
 	}
 	public Book getBook(int IBSN) {
@@ -28,7 +28,7 @@ public class BookManager {
 		}
 		return null; //no results
 	}
-	public Book getBookByIndex(int index) {
+	public static Book getBookByIndex(int index) {
 		return books.get(index);
 	}
 	public static void checkOutBook(Book book) {
