@@ -8,7 +8,7 @@ public class BookManager {
 	public static void add(Book book) {
 		books.add(book);
 	}
-	public Book getBook(int IBSN) {
+	public static Book getBook(int IBSN) {
 		for(int i = 0; i<books.size(); i++) {
 			if(books.get(i).getIBSN()==IBSN) {
 				return books.get(i);	

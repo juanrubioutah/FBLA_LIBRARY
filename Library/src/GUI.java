@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -60,6 +59,8 @@ public class GUI {
 		windowPanel.add(testLabel);
 		windowPanel.add(addBookButton);
 		windowPanel.add(addUserButton);
+		windowPanel.add(addHoldButton);
+		windowPanel.add(payFineButton);
 		windowFrame.add(windowPanel);
 		windowFrame.setSize(500,500);
 		windowFrame.setVisible(true);
@@ -96,7 +97,7 @@ public class GUI {
 					int barcode = Integer.parseInt(barcodeTextField.getText());
 					Book book = new Book(barcode, nameTextField.getText(), authorTextField.getText());
 					bookManager.add(book);
-					init(); //TODO: remove 
+					addBookFrame.dispose();
 				}
 				else {
 					//TODO: make an alert telling the user to complete all fields
@@ -148,6 +149,7 @@ public class GUI {
 					int ID = Integer.parseInt(idTextField.getText());
 					User user = new User(ID, firstNameTextField.getText(), lastNameTextField.getText(), false);
 					userManager.addUser(user);
+					addUserFrame.dispose();
 				}
 				else {
 					//TODO: alert the user that the boxes are incomplete
@@ -169,10 +171,90 @@ public class GUI {
 		addUserFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public static void addHoldWindow() {
-		
+		JFrame addHoldFrame = new JFrame();
+		JPanel addHoldPanel = new JPanel();
+		JLabel bookLabel = new JLabel();
+		bookLabel.setText("Book Barcode Number: ");
+		JTextField bookTextField = new JTextField();
+		JLabel userLabel = new JLabel();
+		userLabel.setText("Hold User ID: ");
+		JTextField userTextField = new JTextField();
+		JButton cancelButton = new JButton();
+		cancelButton.setText("Cancel");
+		JButton holdButton = new JButton();
+		holdButton.setText("Place Hold");
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addHoldFrame.dispose();
+			}
+		});
+		holdButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
+				Book myBook = BookManager.getBook(Integer.parseInt(bookTextField.getText()));
+				myBook.hold(myUser);
+				addHoldFrame.dispose();
+			}
+		});
+		addHoldFrame.setTitle("Place a Hold");
+		addHoldFrame.setSize(500, 500);
+		addHoldFrame.setVisible(true);
+		addHoldPanel.add(bookLabel);
+		addHoldPanel.add(bookTextField);
+		addHoldPanel.add(userLabel);
+		addHoldPanel.add(userTextField);
+		addHoldPanel.add(cancelButton);
+		addHoldPanel.add(holdButton);
+		addHoldFrame.add(addHoldPanel);
 	}
 	public static void payFineWindow() {
-		
+		JFrame fineFrame = new JFrame();
+		JPanel finePanel = new JPanel();
+		JLabel userLabel = new JLabel();
+		userLabel.setText("User ID: ");
+		JTextField userTextField = new JTextField();
+		JButton fineLookupButton = new JButton();
+		fineLookupButton.setText("Look Up Fines");
+		JLabel fineLabel = new JLabel();
+		fineLabel.setText("Fine: ");
+		fineLookupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
+				double fineAmount = myUser.fineAmount;
+				fineLabel.setText("Fine: "+fineAmount);
+			}
+		});
+		JButton cancelButton = new JButton();
+		cancelButton.setText("Cancel");
+		JButton payFinesButton = new JButton();
+		payFinesButton.setText("Pay Fines");
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fineFrame.dispose();
+			}
+		});
+		payFinesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
+				myUser.payFine(myUser.fineAmount);
+				fineFrame.dispose();
+			}
+		});
+		fineFrame.setTitle("Pay Fines");
+		fineFrame.setSize(500, 500);
+		fineFrame.setVisible(true);
+		finePanel.add(userLabel);
+		finePanel.add(userTextField);
+		finePanel.add(fineLookupButton);
+		finePanel.add(fineLabel);
+		finePanel.add(cancelButton);
+		finePanel.add(payFinesButton);
+		fineFrame.add(finePanel);
 	}
 	
 }

@@ -2,14 +2,14 @@ import java.io.*;
 import java.util.*;
 
 public class UserManager {
-	public ArrayList<User> users = new ArrayList<User>();
+	public static ArrayList<User> users = new ArrayList<User>();
 	public void addUser(User user){
 		users.add(user);
 	}
 	public User getUserByIndex(int index){
 		return users.get(index);
 	}
-	public User getUserById(int id){
+	public static User getUserById(int id){
 		for(int i = 0; i<users.size(); i++){
 			if(users.get(i).getID()==id){
 				return users.get(i);
