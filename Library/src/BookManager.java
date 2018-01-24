@@ -8,15 +8,15 @@ public class BookManager {
 	public static void add(Book book) {
 		books.add(book);
 	}
-	public static Book getBook(int IBSN) {
+	public static Book getBook(long ISBN) {
 		for(int i = 0; i<books.size(); i++) {
-			if(books.get(i).getIBSN()==IBSN) {
+			if(books.get(i).getISBN()==ISBN) {
 				return books.get(i);	
 			}
 		}
 		return null; //book not found
 	}
-	public Book getBook(String query) { //search for books by title or author
+	public static Book getBook(String query) { //search for books by title or author
 		ArrayList<Book> searchResults = new ArrayList<Book>();
 		for(int i = 0; i<books.size(); i++) {
 			if(books.get(i).getTitle().contains(query)) {

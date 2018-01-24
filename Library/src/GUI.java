@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -19,10 +21,12 @@ public class GUI {
 		JButton addUserButton = new JButton();
 		JButton addHoldButton = new JButton();
 		JButton payFineButton = new JButton();
+		JButton checkOutButton = new JButton();
+		JButton checkInButton = new JButton();
 		JLabel testLabel = new JLabel();
 		try {
 			Book myBook = BookManager.getBookByIndex(0);
-			testLabel.setText("TEST BOOK:\n"+myBook.getTitle()+"\n"+myBook.getAuthor()+"\n"+myBook.getIBSN());
+			testLabel.setText("TEST BOOK:\n"+myBook.getTitle()+"\n"+myBook.getAuthor()+"\n"+myBook.getISBN());
 		}
 		catch(IndexOutOfBoundsException e) {
 			e.printStackTrace();
@@ -56,31 +60,48 @@ public class GUI {
 				payFineWindow();
 			}
 		});
+		checkOutButton.setText("Check Out");
+		checkOutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkOutWindow();
+			}
+		});
+		checkInButton.setText("Check In");
+		checkInButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkInWindow();
+			}
+		});
+		
 		windowPanel.add(testLabel);
 		windowPanel.add(addBookButton);
 		windowPanel.add(addUserButton);
 		windowPanel.add(addHoldButton);
 		windowPanel.add(payFineButton);
+		windowPanel.add(checkOutButton);
+		windowPanel.add(checkInButton);
 		windowFrame.add(windowPanel);
 		windowFrame.setSize(500,500);
 		windowFrame.setVisible(true);
 		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowFrame.setTitle("Library"); //TODO: make a better title
-	
 	}
 	public static void newBookAdditionWindow() {
 		JFrame addBookFrame = new JFrame();
 		JPanel addBookPanel = new JPanel();
 		JButton cancelButton = new JButton();
+		GridBagLayout gbc = new GridBagLayout();
 		JLabel bookName = new JLabel();
 		bookName.setText("Book Name:");
-		JTextField nameTextField = new JTextField();
+		JTextField nameTextField = new JTextField(10);
 		JLabel bookAuthor = new JLabel();
 		bookAuthor.setText("Book Author:");
-		JTextField authorTextField = new JTextField();
+		JTextField authorTextField = new JTextField(10);
 		JLabel bookBarcodeNumber = new JLabel();
 		bookBarcodeNumber.setText("Barcode Number:");
-		JTextField barcodeTextField = new JTextField();
+		JTextField barcodeTextField = new JTextField(10);
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
@@ -94,7 +115,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!nameTextField.getText().equals("")&&!authorTextField.getText().equals("")&&!barcodeTextField.getText().equals("")) {
-					int barcode = Integer.parseInt(barcodeTextField.getText());
+					long barcode = Long.parseLong(barcodeTextField.getText());
 					Book book = new Book(barcode, nameTextField.getText(), authorTextField.getText());
 					bookManager.add(book);
 					addBookFrame.dispose();
@@ -124,13 +145,13 @@ public class GUI {
 		JPanel addUserPanel = new JPanel();
 		JLabel firstNameLabel = new JLabel();
 		firstNameLabel.setText("First Name:");
-		JTextField firstNameTextField = new JTextField();
+		JTextField firstNameTextField = new JTextField(10);
 		JLabel lastNameLabel = new JLabel();
 		lastNameLabel.setText("Last Name:");
-		JTextField lastNameTextField = new JTextField();
+		JTextField lastNameTextField = new JTextField(10);
 		JLabel idLabel = new JLabel();
 		idLabel.setText("ID:");
-		JTextField idTextField = new JTextField();
+		JTextField idTextField = new JTextField(10);
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
@@ -175,10 +196,10 @@ public class GUI {
 		JPanel addHoldPanel = new JPanel();
 		JLabel bookLabel = new JLabel();
 		bookLabel.setText("Book Barcode Number: ");
-		JTextField bookTextField = new JTextField();
+		JTextField bookTextField = new JTextField(10);
 		JLabel userLabel = new JLabel();
 		userLabel.setText("Hold User ID: ");
-		JTextField userTextField = new JTextField();
+		JTextField userTextField = new JTextField(10);
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
 		JButton holdButton = new JButton();
@@ -214,7 +235,7 @@ public class GUI {
 		JPanel finePanel = new JPanel();
 		JLabel userLabel = new JLabel();
 		userLabel.setText("User ID: ");
-		JTextField userTextField = new JTextField();
+		JTextField userTextField = new JTextField(10);
 		JButton fineLookupButton = new JButton();
 		fineLookupButton.setText("Look Up Fines");
 		JLabel fineLabel = new JLabel();
@@ -255,6 +276,58 @@ public class GUI {
 		finePanel.add(cancelButton);
 		finePanel.add(payFinesButton);
 		fineFrame.add(finePanel);
+	}
+	public static void checkOutWindow() {
+		JFrame checkOutFrame = new JFrame();
+		JPanel checkOutPanel = new JPanel();
+		JLabel IDlabel = new JLabel();
+		JTextField IDtextField = new JTextField(10);
+		JLabel bookLabel = new JLabel();
+		JTextField bookTextField = new JTextField(10);
+		IDlabel.setText("User ID:");
+		bookLabel.setText("Book Barcode:");
+		JButton checkOutButton = new JButton();
+		JButton cancelButton = new JButton();
+		checkOutButton.setText("Check Out");
+		cancelButton.setText("Cancel");
+		checkOutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(!(bookManager.getBook(Long.parseLong(bookTextField.getText().toString()))==null)){
+						Book book = bookManager.getBook(Long.parseLong(bookTextField.getText().toString()));
+						book.checkOut(userManager.getUserById(Integer.parseInt(IDtextField.getText().toString())));
+						JOptionPane.showMessageDialog(null, "Book checked out successfully!");
+						checkOutFrame.dispose();
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Book not found!");
+					}
+				}catch(Exception f) {
+					JOptionPane.showMessageDialog(null, "Input error. Try again.");
+					f.printStackTrace();
+				}
+			}
+		});
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkOutFrame.dispose();
+			}
+		});
+		checkOutFrame.setTitle("Check Out");
+		checkOutFrame.setSize(500, 500);
+		checkOutFrame.setVisible(true);
+		checkOutPanel.add(IDlabel);
+		checkOutPanel.add(IDtextField);
+		checkOutPanel.add(bookLabel);
+		checkOutPanel.add(bookTextField);
+		checkOutPanel.add(cancelButton);
+		checkOutPanel.add(checkOutButton);
+		checkOutFrame.add(checkOutPanel);
+	}
+	public static void checkInWindow() {
+		
 	}
 	
 }

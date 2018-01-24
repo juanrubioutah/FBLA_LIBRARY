@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Book {
-	public static int IBSN;
+	public static long ISBN;
 	public static String title;
 	public static String author;
 	public static LocalDateTime lastCheckout;
@@ -15,8 +15,8 @@ public class Book {
 	public static BookManager bookManager = main.getGlobalBookManager();
 	public static UserManager userManager = main.getGlobalUserManager();
 	
-	public Book(int IBSN, String title, String author){
-		this.IBSN = IBSN;
+	public Book(long ISBN, String title, String author){
+		this.ISBN = ISBN;
 		this.title = title;
 		this.author = author;
 		
@@ -44,8 +44,8 @@ public class Book {
 	public void checkIn(){
 		bookManager.checkInBook(this);
 	}
-	public int getIBSN() {
-		return IBSN;
+	public long getISBN() {
+		return ISBN;
 	}
 	public String getTitle() {
 		return title;
