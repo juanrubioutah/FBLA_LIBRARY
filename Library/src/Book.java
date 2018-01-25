@@ -27,6 +27,9 @@ public class Book {
 		isOnHold = false;
 		holdUser = null;
 	}
+	public User getLastUser() {
+		return lastUser;
+	}
 	public void checkOut(User user){
 		lastUser = user;
 		isCheckedOut = true;

@@ -296,7 +296,7 @@ public class GUI {
 				try {
 					if(!(bookManager.getBook(Long.parseLong(bookTextField.getText().toString()))==null)){
 						Book book = bookManager.getBook(Long.parseLong(bookTextField.getText().toString()));
-						book.checkOut(userManager.getUserById(Integer.parseInt(IDtextField.getText().toString())));
+						User.checkOut(userManager.getUserById(Integer.parseInt(IDtextField.getText().toString())), book);
 						JOptionPane.showMessageDialog(null, "Book checked out successfully!");
 						checkOutFrame.dispose();
 					}
@@ -327,7 +327,48 @@ public class GUI {
 		checkOutFrame.add(checkOutPanel);
 	}
 	public static void checkInWindow() {
+		JFrame checkInFrame = new JFrame();
+		JPanel checkInPanel = new JPanel();
+		JLabel checkInLabel = new JLabel();
+		JTextField checkInTextField = new JTextField();
+		JButton cancelButton = new JButton();
+		JButton checkInButton = new JButton();
+		checkInLabel.setText("Book Barcode:");
+		cancelButton.setText("Cancel");
+		checkInButton.setText("Check In");
 		
+		cancelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				checkInFrame.dispose();
+			}
+			
+		});
+		checkInButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Book book = bookManager.getBook(Long.parseLong(checkInTextField.getText().toString()));
+					User checkInUser = book.getLastUser();
+					checkInUser.checkIn(book);
+					JOptionPane.showMessageDialog(null, "Book Returned Successfully!");
+				}catch(Exception f) {
+					f.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error Checking In");
+				}
+			}
+			
+		});
+		checkInFrame.setTitle("Check In");
+		checkInFrame.setSize(500, 500);
+		checkInFrame.setVisible(true);
+		checkInPanel.add(checkInLabel);
+		checkInPanel.add(checkInTextField);
+		checkInPanel.add(cancelButton);
+		checkInPanel.add(checkInButton);
+		checkInFrame.add(checkInPanel);
 	}
 	
 }

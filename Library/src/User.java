@@ -5,10 +5,10 @@ public class User {
 	public int ID;
 	public String firstName;
 	public String lastName;
-	public double fineAmount;
-	public ArrayList<Book> checkedOutBooks;
+	public static double fineAmount;
+	public static ArrayList<Book> checkedOutBooks;
 	public boolean isAdmin;
-	public LocalDateTime checkOutTime;
+	public static LocalDateTime checkOutTime;
 	
 	public User(int ID, String firstName, String lastName, boolean isAdmin){
 		this.ID = ID;
@@ -18,7 +18,7 @@ public class User {
 		checkedOutBooks = new ArrayList<Book>();
 	}
 	
-	public boolean isEligible(){ //determine eligibility to check out a book, return true if eligible
+	public static boolean isEligible(){ //determine eligibility to check out a book, return true if eligible
 		if(fineAmount>0){
 			return false;
 		}
@@ -33,7 +33,7 @@ public class User {
 		return false;
 	}
 	
-	public void checkOut(User user, Book book){
+	public static void checkOut(User user, Book book){
 		if(isEligible()==true) {
 			checkedOutBooks.add(book);
 			book.checkOut(user);
