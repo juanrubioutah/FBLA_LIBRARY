@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class BookManager {
@@ -11,8 +12,14 @@ public class BookManager {
 	public static Book getBook(long ISBN) {
 		for(int i = 0; i<books.size(); i++) {
 			if(books.get(i).getISBN()==ISBN) {
-				return books.get(i);	
+				return books.get(i);
 			}
+		}
+		try {
+			throw new FileNotFoundException();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null; //book not found
 	}

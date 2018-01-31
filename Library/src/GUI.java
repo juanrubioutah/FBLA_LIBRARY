@@ -24,6 +24,14 @@ public class GUI {
 		JButton checkOutButton = new JButton();
 		JButton checkInButton = new JButton();
 		JLabel testLabel = new JLabel();
+		JLabel bookLookupLabel = new JLabel();
+		bookLookupLabel.setText("Book Lookup");
+		JLabel barcodeNumLabel = new JLabel();
+		barcodeNumLabel.setText("Barcode Number");
+		JButton searchButton = new JButton();
+		JTextField barcodeTextField = new JTextField(10);
+		searchButton.setText("Find");
+		JLabel bookInfoLabel = new JLabel();
 		try {
 			Book myBook = BookManager.getBookByIndex(0);
 			testLabel.setText("TEST BOOK:\n"+myBook.getTitle()+"\n"+myBook.getAuthor()+"\n"+myBook.getISBN());
@@ -74,6 +82,39 @@ public class GUI {
 				checkInWindow();
 			}
 		});
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				long barcodeNum = Long.parseLong(barcodeTextField.getText().toString());
+				try {
+					Book book = bookManager.getBook(barcodeNum);
+					if(book.isCheckedOut) {
+						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently checked out by: "+book.getLastUser().firstName+" "+book.getLastUser().lastName+", "+book.getLastUser().getID());
+						windowPanel.add(bookInfoLabel);
+						windowFrame.setVisible(false);
+						windowFrame.setVisible(true);
+					}
+					else if(book.isOnHold){
+						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently on hold by: "+book.holdUser.firstName+" "+book.holdUser.lastName+", "+book.holdUser.getID());
+						windowPanel.add(bookInfoLabel);
+						windowFrame.setVisible(false);
+						windowFrame.setVisible(true);
+					}
+					else {
+						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently available.");
+						windowPanel.add(bookInfoLabel);
+						windowFrame.setVisible(false);
+						windowFrame.setVisible(true);
+					}
+				}catch(Exception f) {
+					f.printStackTrace();
+					bookInfoLabel.setText("Book not found!");
+					windowPanel.add(bookInfoLabel);
+					windowFrame.setVisible(false);
+					windowFrame.setVisible(true);
+				}
+			}
+		});
 		
 		windowPanel.add(testLabel);
 		windowPanel.add(addBookButton);
@@ -82,6 +123,10 @@ public class GUI {
 		windowPanel.add(payFineButton);
 		windowPanel.add(checkOutButton);
 		windowPanel.add(checkInButton);
+		windowPanel.add(bookLookupLabel);
+		windowPanel.add(barcodeNumLabel);
+		windowPanel.add(barcodeTextField);
+		windowPanel.add(searchButton);
 		windowFrame.add(windowPanel);
 		windowFrame.setSize(500,500);
 		windowFrame.setVisible(true);
@@ -214,12 +259,13 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
-				Book myBook = BookManager.getBook(Integer.parseInt(bookTextField.getText()));
+				Book myBook = BookManager.getBook(Long.parseLong(bookTextField.getText()));
 				myBook.hold(myUser);
 				addHoldFrame.dispose();
 			}
 		});
 		addHoldFrame.setTitle("Place a Hold");
+		addHoldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addHoldFrame.setSize(500, 500);
 		addHoldFrame.setVisible(true);
 		addHoldPanel.add(bookLabel);
@@ -267,6 +313,7 @@ public class GUI {
 			}
 		});
 		fineFrame.setTitle("Pay Fines");
+		fineFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fineFrame.setSize(500, 500);
 		fineFrame.setVisible(true);
 		finePanel.add(userLabel);
@@ -316,6 +363,7 @@ public class GUI {
 			}
 		});
 		checkOutFrame.setTitle("Check Out");
+		checkOutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		checkOutFrame.setSize(500, 500);
 		checkOutFrame.setVisible(true);
 		checkOutPanel.add(IDlabel);
@@ -362,6 +410,7 @@ public class GUI {
 			
 		});
 		checkInFrame.setTitle("Check In");
+		checkInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		checkInFrame.setSize(500, 500);
 		checkInFrame.setVisible(true);
 		checkInPanel.add(checkInLabel);
