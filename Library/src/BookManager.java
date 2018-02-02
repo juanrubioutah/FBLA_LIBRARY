@@ -39,13 +39,12 @@ public class BookManager {
 		return books.get(index);
 	}
 	public static void checkOutBook(Book book) {
-		for(int i = 0; i<books.size(); i++) {
-			if(books.get(i)==book){
-				books.remove(i);
-				return;
-			}
+		if(book.isCheckedOut==false) {
+			book.isCheckedOut = true;
 		}
-		System.out.println("Unable to find book to check out!");
+		else {
+			System.out.println("Unable to find book to check out!");
+		}
 	}
 	public static void checkInBook(Book book) {
 		books.add(book);
