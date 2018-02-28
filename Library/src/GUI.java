@@ -23,6 +23,7 @@ public class GUI {
 		JButton payFineButton = new JButton();
 		JButton checkOutButton = new JButton();
 		JButton checkInButton = new JButton();
+		JButton reportCreationButton = new JButton();
 		JLabel testLabel = new JLabel();
 		JLabel bookLookupLabel = new JLabel();
 		bookLookupLabel.setText("Book Lookup");
@@ -82,6 +83,13 @@ public class GUI {
 				checkInWindow();
 			}
 		});
+		reportCreationButton.setText("Create a Report");
+		reportCreationButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reportCreationWindow();
+			}
+		});
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -123,6 +131,7 @@ public class GUI {
 		windowPanel.add(payFineButton);
 		windowPanel.add(checkOutButton);
 		windowPanel.add(checkInButton);
+		windowPanel.add(reportCreationButton);
 		windowPanel.add(bookLookupLabel);
 		windowPanel.add(barcodeNumLabel);
 		windowPanel.add(barcodeTextField);
@@ -418,6 +427,46 @@ public class GUI {
 		checkInPanel.add(cancelButton);
 		checkInPanel.add(checkInButton);
 		checkInFrame.add(checkInPanel);
+	}
+	
+	public static void reportCreationWindow() {
+		JFrame reportCreationFrame = new JFrame();
+		JPanel reportCreationPanel = new JPanel();
+		JButton bookReportCreationButton = new JButton();
+		JButton userReportCreationButton = new JButton();
+		bookReportCreationButton.setText("Generate Book Report");
+		userReportCreationButton.setText("Generate User Report");
+		bookReportCreationButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ReportCreator creator = new ReportCreator("book");
+				if(creator.create()) {
+					//Report generated successfully
+				}
+				else {
+					//Error generating report
+				}
+			}
+		});
+		userReportCreationButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ReportCreator creator = new ReportCreator("users");
+				if(creator.create()) {
+					//Report generated successfully
+				}
+				else {
+					//Error generating report
+				}
+			}
+		});
+		reportCreationPanel.add(userReportCreationButton);
+		reportCreationPanel.add(bookReportCreationButton);
+		reportCreationFrame.setTitle("Create a Report");
+		reportCreationFrame.setVisible(true);
+		reportCreationFrame.setSize(500, 500);
+		reportCreationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		reportCreationFrame.add(reportCreationPanel);
 	}
 	
 }
