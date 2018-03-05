@@ -16,7 +16,7 @@ public class GUI {
 	public static void init() {
 		//TODO: have the barcode scanner start listening when on this screen
 		JFrame windowFrame = new JFrame();
-		JPanel windowPanel = new JPanel();
+		JPanel windowPanel = new JPanel(new SpringLayout());
 		JButton addBookButton = new JButton();
 		JButton addUserButton = new JButton();
 		JButton addHoldButton = new JButton();
@@ -144,7 +144,8 @@ public class GUI {
 	}
 	public static void newBookAdditionWindow() {
 		JFrame addBookFrame = new JFrame();
-		JPanel addBookPanel = new JPanel();
+		JPanel addBookPanel = new JPanel(new SpringLayout());
+		SpringUtilities.makeCompactGrid(addBookPanel, 4, 2, 6, 6, 6, 6);
 		JButton cancelButton = new JButton();
 		GridBagLayout gbc = new GridBagLayout();
 		JLabel bookName = new JLabel();
@@ -175,8 +176,7 @@ public class GUI {
 					addBookFrame.dispose();
 				}
 				else {
-					//TODO: make an alert telling the user to complete all fields
-					
+					JOptionPane.showMessageDialog(addBookFrame, "Please Complete All Fields");
 				}
 			}
 		});
@@ -196,7 +196,7 @@ public class GUI {
 	}
 	public static void newUserAdditionWindow() {
 		JFrame addUserFrame = new JFrame();
-		JPanel addUserPanel = new JPanel();
+		JPanel addUserPanel = new JPanel(new SpringLayout());
 		JLabel firstNameLabel = new JLabel();
 		firstNameLabel.setText("First Name:");
 		JTextField firstNameTextField = new JTextField(10);
@@ -227,7 +227,7 @@ public class GUI {
 					addUserFrame.dispose();
 				}
 				else {
-					//TODO: alert the user that the boxes are incomplete
+					JOptionPane.showMessageDialog(addUserFrame, "Please Complete All Fields");
 				}
 			}
 		});
@@ -247,7 +247,7 @@ public class GUI {
 	}
 	public static void addHoldWindow() {
 		JFrame addHoldFrame = new JFrame();
-		JPanel addHoldPanel = new JPanel();
+		JPanel addHoldPanel = new JPanel(new SpringLayout());
 		JLabel bookLabel = new JLabel();
 		bookLabel.setText("Book Barcode Number: ");
 		JTextField bookTextField = new JTextField(10);
@@ -287,7 +287,7 @@ public class GUI {
 	}
 	public static void payFineWindow() {
 		JFrame fineFrame = new JFrame();
-		JPanel finePanel = new JPanel();
+		JPanel finePanel = new JPanel(new SpringLayout());
 		JLabel userLabel = new JLabel();
 		userLabel.setText("User ID: ");
 		JTextField userTextField = new JTextField(10);
@@ -335,7 +335,7 @@ public class GUI {
 	}
 	public static void checkOutWindow() {
 		JFrame checkOutFrame = new JFrame();
-		JPanel checkOutPanel = new JPanel();
+		JPanel checkOutPanel = new JPanel(new SpringLayout());
 		JLabel IDlabel = new JLabel();
 		JTextField IDtextField = new JTextField(10);
 		JLabel bookLabel = new JLabel();
@@ -385,7 +385,7 @@ public class GUI {
 	}
 	public static void checkInWindow() {
 		JFrame checkInFrame = new JFrame();
-		JPanel checkInPanel = new JPanel();
+		JPanel checkInPanel = new JPanel(new SpringLayout());
 		JLabel checkInLabel = new JLabel();
 		JTextField checkInTextField = new JTextField();
 		JButton cancelButton = new JButton();
@@ -431,7 +431,7 @@ public class GUI {
 	
 	public static void reportCreationWindow() {
 		JFrame reportCreationFrame = new JFrame();
-		JPanel reportCreationPanel = new JPanel();
+		JPanel reportCreationPanel = new JPanel(new SpringLayout());
 		JButton bookReportCreationButton = new JButton();
 		JButton userReportCreationButton = new JButton();
 		bookReportCreationButton.setText("Generate Book Report");
