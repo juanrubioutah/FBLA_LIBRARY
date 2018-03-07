@@ -1,6 +1,11 @@
 import javax.swing.*;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -15,24 +20,47 @@ public class GUI {
 	}
 	public static void init() {
 		//TODO: have the barcode scanner start listening when on this screen
+		
 		JFrame windowFrame = new JFrame();
-		JPanel windowPanel = new JPanel(new SpringLayout());
+		JPanel windowPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JButton addBookButton = new JButton();
+		addBookButton.setFont(new Font("Arial", Font.BOLD, 15));
+		addBookButton.setPreferredSize(new Dimension(175,75));
 		JButton addUserButton = new JButton();
+		addUserButton.setFont(new Font("Arial", Font.BOLD, 15));
+		addUserButton.setPreferredSize(new Dimension(175,75));
 		JButton addHoldButton = new JButton();
+		addHoldButton.setFont(new Font("Arial", Font.BOLD, 15));
+		addHoldButton.setPreferredSize(new Dimension(175,75));
 		JButton payFineButton = new JButton();
+		payFineButton.setFont(new Font("Arial", Font.BOLD, 15));
+		payFineButton.setPreferredSize(new Dimension(175,75));
 		JButton checkOutButton = new JButton();
+		checkOutButton.setFont(new Font("Arial", Font.BOLD, 15));
+		checkOutButton.setPreferredSize(new Dimension(175,75));
 		JButton checkInButton = new JButton();
+		checkInButton.setFont(new Font("Arial", Font.BOLD, 15));
+		checkInButton.setPreferredSize(new Dimension(175,75));
 		JButton reportCreationButton = new JButton();
+		reportCreationButton.setFont(new Font("Arial", Font.BOLD, 15));
+		reportCreationButton.setPreferredSize(new Dimension(175,75));
 		JLabel testLabel = new JLabel();
 		JLabel bookLookupLabel = new JLabel();
-		bookLookupLabel.setText("Book Lookup");
+		bookLookupLabel.setFont(new Font("Arial", Font.BOLD, 25));
+		bookLookupLabel.setText("Book Lookup:");
 		JLabel barcodeNumLabel = new JLabel();
+		barcodeNumLabel.setFont(new Font("Arial", Font.BOLD, 15));
 		barcodeNumLabel.setText("Barcode Number");
 		JButton searchButton = new JButton();
+		searchButton.setFont(new Font("Arial", Font.BOLD, 15));
+		searchButton.setPreferredSize(new Dimension(175,75));
 		JTextField barcodeTextField = new JTextField(10);
 		searchButton.setText("Find");
+		searchButton.setFont(new Font("Arial", Font.BOLD, 15));
+		searchButton.setPreferredSize(new Dimension(175,75));
 		JLabel bookInfoLabel = new JLabel();
+		JLabel userInfoLabel = new JLabel();
 		try {
 			Book myBook = BookManager.getBookByIndex(0);
 			testLabel.setText("TEST BOOK:\n"+myBook.getTitle()+"\n"+myBook.getAuthor()+"\n"+myBook.getISBN());
@@ -97,20 +125,26 @@ public class GUI {
 				try {
 					Book book = bookManager.getBook(barcodeNum);
 					if(book.isCheckedOut) {
-						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently checked out by: "+book.getLastUser().firstName+" "+book.getLastUser().lastName+", "+book.getLastUser().getID());
+						bookInfoLabel.setText(book.title+", "+book.author);
+						userInfoLabel.setText("Currently checked out by: "+book.getLastUser().firstName+" "+book.getLastUser().lastName+", "+book.getLastUser().getID());
 						windowPanel.add(bookInfoLabel);
+						windowPanel.add(userInfoLabel);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
 					else if(book.isOnHold){
-						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently on hold by: "+book.holdUser.firstName+" "+book.holdUser.lastName+", "+book.holdUser.getID());
+						bookInfoLabel.setText(book.title+", "+book.author);
+						userInfoLabel.setText("Currently on hold by: "+book.holdUser.firstName+" "+book.holdUser.lastName+", "+book.holdUser.getID());
 						windowPanel.add(bookInfoLabel);
+						windowPanel.add(userInfoLabel);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
 					else {
-						bookInfoLabel.setText(book.title+", "+book.author+"\nCurrently available.");
+						bookInfoLabel.setText(book.title+", "+book.author);
+						userInfoLabel.setText("Currently available.");
 						windowPanel.add(bookInfoLabel);
+						windowPanel.add(userInfoLabel);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
@@ -123,40 +157,85 @@ public class GUI {
 				}
 			}
 		});
-		
-		windowPanel.add(testLabel);
-		windowPanel.add(addBookButton);
-		windowPanel.add(addUserButton);
-		windowPanel.add(addHoldButton);
-		windowPanel.add(payFineButton);
-		windowPanel.add(checkOutButton);
-		windowPanel.add(checkInButton);
-		windowPanel.add(reportCreationButton);
-		windowPanel.add(bookLookupLabel);
-		windowPanel.add(barcodeNumLabel);
-		windowPanel.add(barcodeTextField);
-		windowPanel.add(searchButton);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(10,10,10,10);
+		windowPanel.add(addBookButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		windowPanel.add(addUserButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 0;
+		windowPanel.add(addHoldButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		windowPanel.add(payFineButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		windowPanel.add(checkOutButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+		windowPanel.add(checkInButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		windowPanel.add(reportCreationButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		windowPanel.add(bookLookupLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 4;
+		windowPanel.add(barcodeNumLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 4;
+		windowPanel.add(barcodeTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 4;
+		windowPanel.add(searchButton, c);
 		windowFrame.add(windowPanel);
-		windowFrame.setSize(500,500);
+		windowFrame.setSize(775, 1000);
 		windowFrame.setVisible(true);
 		windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		windowFrame.setTitle("Library"); //TODO: make a better title
 	}
 	public static void newBookAdditionWindow() {
 		JFrame addBookFrame = new JFrame();
-		JPanel addBookPanel = new JPanel(new SpringLayout());
-		SpringUtilities.makeCompactGrid(addBookPanel, 4, 2, 6, 6, 6, 6);
+		JPanel addBookPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JButton cancelButton = new JButton();
-		GridBagLayout gbc = new GridBagLayout();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		JLabel bookName = new JLabel();
+		bookName.setFont(new Font("Arial", Font.BOLD, 15));
+		bookName.setPreferredSize(new Dimension(125,50));
 		bookName.setText("Book Name:");
 		JTextField nameTextField = new JTextField(10);
+		nameTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		nameTextField.setPreferredSize(new Dimension(125,50));
 		JLabel bookAuthor = new JLabel();
+		bookAuthor.setFont(new Font("Arial", Font.BOLD, 15));
+		bookAuthor.setPreferredSize(new Dimension(125,50));
 		bookAuthor.setText("Book Author:");
 		JTextField authorTextField = new JTextField(10);
+		authorTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		authorTextField.setPreferredSize(new Dimension(125,50));
 		JLabel bookBarcodeNumber = new JLabel();
+		bookBarcodeNumber.setFont(new Font("Arial", Font.BOLD, 15));
+		bookBarcodeNumber.setPreferredSize(new Dimension(125,50));
 		bookBarcodeNumber.setText("Barcode Number:");
 		JTextField barcodeTextField = new JTextField(10);
+		barcodeTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		barcodeTextField.setPreferredSize(new Dimension(125,50));
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
@@ -165,6 +244,8 @@ public class GUI {
 			}
 		});
 		JButton saveButton = new JButton();
+		saveButton.setFont(new Font("Arial", Font.BOLD, 15));
+		saveButton.setPreferredSize(new Dimension(125,50));
 		saveButton.setText("Save");
 		saveButton.addActionListener(new ActionListener() {
 			@Override
@@ -180,33 +261,73 @@ public class GUI {
 				}
 			}
 		});
-		addBookPanel.add(bookName);
-		addBookPanel.add(nameTextField);
-		addBookPanel.add(bookAuthor);
-		addBookPanel.add(authorTextField);
-		addBookPanel.add(bookBarcodeNumber);
-		addBookPanel.add(barcodeTextField);
-		addBookPanel.add(cancelButton);
-		addBookPanel.add(saveButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		addBookPanel.add(bookName, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		addBookPanel.add(nameTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		addBookPanel.add(bookAuthor, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		addBookPanel.add(authorTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		addBookPanel.add(bookBarcodeNumber, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		addBookPanel.add(barcodeTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		addBookPanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		addBookPanel.add(saveButton, c);
 		addBookFrame.add(addBookPanel);
 		addBookFrame.setTitle("Add a Book");
-		addBookFrame.setSize(500,500);
+		addBookFrame.setSize(750,750);
 		addBookFrame.setVisible(true);
 		addBookFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public static void newUserAdditionWindow() {
 		JFrame addUserFrame = new JFrame();
-		JPanel addUserPanel = new JPanel(new SpringLayout());
+		JPanel addUserPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel firstNameLabel = new JLabel();
+		firstNameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		firstNameLabel.setPreferredSize(new Dimension(125,50));
 		firstNameLabel.setText("First Name:");
 		JTextField firstNameTextField = new JTextField(10);
+		firstNameTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		firstNameTextField.setPreferredSize(new Dimension(125,50));
 		JLabel lastNameLabel = new JLabel();
+		lastNameLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		lastNameLabel.setPreferredSize(new Dimension(125,50));
 		lastNameLabel.setText("Last Name:");
 		JTextField lastNameTextField = new JTextField(10);
+		lastNameTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		lastNameTextField.setPreferredSize(new Dimension(125,50));
 		JLabel idLabel = new JLabel();
+		idLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		idLabel.setPreferredSize(new Dimension(125,50));
 		idLabel.setText("ID:");
 		JTextField idTextField = new JTextField(10);
+		idTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		idTextField.setPreferredSize(new Dimension(125,50));
 		JButton cancelButton = new JButton();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		cancelButton.setText("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
@@ -215,6 +336,8 @@ public class GUI {
 			}
 		});
 		JButton saveButton = new JButton();
+		saveButton.setFont(new Font("Arial", Font.BOLD, 15));
+		saveButton.setPreferredSize(new Dimension(125,50));
 		saveButton.setText("Save");
 		saveButton.addActionListener(new ActionListener() {
 			@Override
@@ -224,6 +347,7 @@ public class GUI {
 					int ID = Integer.parseInt(idTextField.getText());
 					User user = new User(ID, firstNameTextField.getText(), lastNameTextField.getText(), false);
 					userManager.addUser(user);
+					JOptionPane.showMessageDialog(addUserFrame, "User Added Successfully!");
 					addUserFrame.dispose();
 				}
 				else {
@@ -231,32 +355,70 @@ public class GUI {
 				}
 			}
 		});
-		addUserPanel.add(firstNameLabel);
-		addUserPanel.add(firstNameTextField);
-		addUserPanel.add(lastNameLabel);
-		addUserPanel.add(lastNameTextField);
-		addUserPanel.add(idLabel);
-		addUserPanel.add(idTextField);
-		addUserPanel.add(cancelButton);
-		addUserPanel.add(saveButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		addUserPanel.add(firstNameLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		addUserPanel.add(firstNameTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		addUserPanel.add(lastNameLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		addUserPanel.add(lastNameTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		addUserPanel.add(idLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		addUserPanel.add(idTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 3;
+		addUserPanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 3;
+		addUserPanel.add(saveButton, c);
 		addUserFrame.add(addUserPanel);
 		addUserFrame.setTitle("Add a User");
-		addUserFrame.setSize(500,500);
+		addUserFrame.setSize(750,750);
 		addUserFrame.setVisible(true);
 		addUserFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public static void addHoldWindow() {
 		JFrame addHoldFrame = new JFrame();
-		JPanel addHoldPanel = new JPanel(new SpringLayout());
+		JPanel addHoldPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel bookLabel = new JLabel();
-		bookLabel.setText("Book Barcode Number: ");
+		bookLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		bookLabel.setPreferredSize(new Dimension(125,50));
+		bookLabel.setText("Book Barcode:");
 		JTextField bookTextField = new JTextField(10);
+		bookTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		bookTextField.setPreferredSize(new Dimension(125,50));
 		JLabel userLabel = new JLabel();
+		userLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		userLabel.setPreferredSize(new Dimension(125,50));
 		userLabel.setText("Hold User ID: ");
 		JTextField userTextField = new JTextField(10);
+		userTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		userTextField.setPreferredSize(new Dimension(125,50));
 		JButton cancelButton = new JButton();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		cancelButton.setText("Cancel");
 		JButton holdButton = new JButton();
+		holdButton.setFont(new Font("Arial", Font.BOLD, 15));
+		holdButton.setPreferredSize(new Dimension(125,50));
 		holdButton.setText("Place Hold");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
@@ -267,45 +429,94 @@ public class GUI {
 		holdButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
-				Book myBook = BookManager.getBook(Long.parseLong(bookTextField.getText()));
-				myBook.hold(myUser);
-				addHoldFrame.dispose();
+				if(!userTextField.getText().equals("")&&!bookTextField.getText().equals("")) {
+					try {
+						User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
+						Book myBook = BookManager.getBook(Long.parseLong(bookTextField.getText()));
+						myBook.hold(myUser);
+						JOptionPane.showMessageDialog(addHoldFrame, "Hold Placed Successfully!");
+						addHoldFrame.dispose();
+					}
+					catch(Exception e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(addHoldFrame, "Error Placing Hold. Please check you user and barcode numbers.");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(addHoldFrame, "Please Complete All Fields.");
+				}
 			}
 		});
 		addHoldFrame.setTitle("Place a Hold");
 		addHoldFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addHoldFrame.setSize(500, 500);
+		addHoldFrame.setSize(750, 750);
 		addHoldFrame.setVisible(true);
-		addHoldPanel.add(bookLabel);
-		addHoldPanel.add(bookTextField);
-		addHoldPanel.add(userLabel);
-		addHoldPanel.add(userTextField);
-		addHoldPanel.add(cancelButton);
-		addHoldPanel.add(holdButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		addHoldPanel.add(bookLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		addHoldPanel.add(bookTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		addHoldPanel.add(userLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		addHoldPanel.add(userTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		addHoldPanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		addHoldPanel.add(holdButton, c);
 		addHoldFrame.add(addHoldPanel);
 	}
 	public static void payFineWindow() {
 		JFrame fineFrame = new JFrame();
-		JPanel finePanel = new JPanel(new SpringLayout());
+		JPanel finePanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel userLabel = new JLabel();
+		userLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		userLabel.setPreferredSize(new Dimension(125,50));
 		userLabel.setText("User ID: ");
 		JTextField userTextField = new JTextField(10);
+		userTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		userTextField.setPreferredSize(new Dimension(125,50));
 		JButton fineLookupButton = new JButton();
-		fineLookupButton.setText("Look Up Fines");
+		fineLookupButton.setFont(new Font("Arial", Font.BOLD, 15));
+		fineLookupButton.setPreferredSize(new Dimension(125,50));
+		fineLookupButton.setText("Look Up");
 		JLabel fineLabel = new JLabel();
+		fineLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		fineLabel.setPreferredSize(new Dimension(125,50));
 		fineLabel.setText("Fine: ");
 		fineLookupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
-				double fineAmount = myUser.fineAmount;
-				fineLabel.setText("Fine: "+fineAmount);
+				try {
+					User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
+					double fineAmount = myUser.fineAmount;
+					fineLabel.setText("Fine: $"+fineAmount);
+				}catch(Exception f) {
+					f.printStackTrace();
+					JOptionPane.showMessageDialog(fineFrame, "User Not Found!");
+				}
 			}
 		});
 		JButton cancelButton = new JButton();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		cancelButton.setText("Cancel");
 		JButton payFinesButton = new JButton();
+		payFinesButton.setFont(new Font("Arial", Font.BOLD, 15));
+		payFinesButton.setPreferredSize(new Dimension(125,50));
 		payFinesButton.setText("Pay Fines");
 		cancelButton.addActionListener(new ActionListener() {
 			@Override
@@ -318,32 +529,65 @@ public class GUI {
 			public void actionPerformed(ActionEvent e) {
 				User myUser = UserManager.getUserById(Integer.parseInt(userTextField.getText()));
 				myUser.payFine(myUser.fineAmount);
+				JOptionPane.showMessageDialog(fineFrame, "Fines Paid Successfully!");
 				fineFrame.dispose();
 			}
 		});
 		fineFrame.setTitle("Pay Fines");
 		fineFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fineFrame.setSize(500, 500);
+		fineFrame.setSize(750, 750);
 		fineFrame.setVisible(true);
-		finePanel.add(userLabel);
-		finePanel.add(userTextField);
-		finePanel.add(fineLookupButton);
-		finePanel.add(fineLabel);
-		finePanel.add(cancelButton);
-		finePanel.add(payFinesButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		finePanel.add(userLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		finePanel.add(userTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		finePanel.add(fineLookupButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		finePanel.add(fineLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		finePanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		finePanel.add(payFinesButton, c);
 		fineFrame.add(finePanel);
 	}
 	public static void checkOutWindow() {
 		JFrame checkOutFrame = new JFrame();
-		JPanel checkOutPanel = new JPanel(new SpringLayout());
+		JPanel checkOutPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel IDlabel = new JLabel();
+		IDlabel.setFont(new Font("Arial", Font.BOLD, 15));
+		IDlabel.setPreferredSize(new Dimension(125,50));
 		JTextField IDtextField = new JTextField(10);
+		IDtextField.setFont(new Font("Arial", Font.BOLD, 15));
+		IDtextField.setPreferredSize(new Dimension(125,50));
 		JLabel bookLabel = new JLabel();
+		bookLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		bookLabel.setPreferredSize(new Dimension(125,50));
 		JTextField bookTextField = new JTextField(10);
+		bookTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		bookTextField.setPreferredSize(new Dimension(125,50));
 		IDlabel.setText("User ID:");
 		bookLabel.setText("Book Barcode:");
 		JButton checkOutButton = new JButton();
+		checkOutButton.setFont(new Font("Arial", Font.BOLD, 15));
+		checkOutButton.setPreferredSize(new Dimension(125,50));
 		JButton cancelButton = new JButton();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		checkOutButton.setText("Check Out");
 		cancelButton.setText("Cancel");
 		checkOutButton.addActionListener(new ActionListener() {
@@ -373,23 +617,51 @@ public class GUI {
 		});
 		checkOutFrame.setTitle("Check Out");
 		checkOutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		checkOutFrame.setSize(500, 500);
+		checkOutFrame.setSize(750, 750);
 		checkOutFrame.setVisible(true);
-		checkOutPanel.add(IDlabel);
-		checkOutPanel.add(IDtextField);
-		checkOutPanel.add(bookLabel);
-		checkOutPanel.add(bookTextField);
-		checkOutPanel.add(cancelButton);
-		checkOutPanel.add(checkOutButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		checkOutPanel.add(IDlabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		checkOutPanel.add(IDtextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		checkOutPanel.add(bookLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		checkOutPanel.add(bookTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		checkOutPanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		checkOutPanel.add(checkOutButton, c);
 		checkOutFrame.add(checkOutPanel);
 	}
 	public static void checkInWindow() {
 		JFrame checkInFrame = new JFrame();
-		JPanel checkInPanel = new JPanel(new SpringLayout());
+		JPanel checkInPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JLabel checkInLabel = new JLabel();
-		JTextField checkInTextField = new JTextField();
+		checkInLabel.setFont(new Font("Arial", Font.BOLD, 15));
+		checkInLabel.setPreferredSize(new Dimension(125,50));
+		JTextField checkInTextField = new JTextField(10);
+		checkInTextField.setFont(new Font("Arial", Font.BOLD, 15));
+		checkInTextField.setPreferredSize(new Dimension(125,50));
 		JButton cancelButton = new JButton();
+		cancelButton.setFont(new Font("Arial", Font.BOLD, 15));
+		cancelButton.setPreferredSize(new Dimension(125,50));
 		JButton checkInButton = new JButton();
+		checkInButton.setFont(new Font("Arial", Font.BOLD, 15));
+		checkInButton.setPreferredSize(new Dimension(125,50));
 		checkInLabel.setText("Book Barcode:");
 		cancelButton.setText("Cancel");
 		checkInButton.setText("Check In");
@@ -411,6 +683,7 @@ public class GUI {
 					User checkInUser = book.getLastUser();
 					checkInUser.checkIn(book);
 					JOptionPane.showMessageDialog(null, "Book Returned Successfully!");
+					checkInFrame.dispose();
 				}catch(Exception f) {
 					f.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Error Checking In");
@@ -420,31 +693,51 @@ public class GUI {
 		});
 		checkInFrame.setTitle("Check In");
 		checkInFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		checkInFrame.setSize(500, 500);
+		checkInFrame.setSize(750, 750);
 		checkInFrame.setVisible(true);
-		checkInPanel.add(checkInLabel);
-		checkInPanel.add(checkInTextField);
-		checkInPanel.add(cancelButton);
-		checkInPanel.add(checkInButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		checkInPanel.add(checkInLabel, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		checkInPanel.add(checkInTextField, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		checkInPanel.add(cancelButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		checkInPanel.add(checkInButton, c);
 		checkInFrame.add(checkInPanel);
 	}
 	
 	public static void reportCreationWindow() {
 		JFrame reportCreationFrame = new JFrame();
-		JPanel reportCreationPanel = new JPanel(new SpringLayout());
+		JPanel reportCreationPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		JButton bookReportCreationButton = new JButton();
+		bookReportCreationButton.setFont(new Font("Arial", Font.BOLD, 15));
+		bookReportCreationButton.setPreferredSize(new Dimension(125,50));
 		JButton userReportCreationButton = new JButton();
-		bookReportCreationButton.setText("Generate Book Report");
-		userReportCreationButton.setText("Generate User Report");
+		userReportCreationButton.setFont(new Font("Arial", Font.BOLD, 15));
+		userReportCreationButton.setPreferredSize(new Dimension(125,50));
+		bookReportCreationButton.setText("Book Report");
+		userReportCreationButton.setText("User Report");
 		bookReportCreationButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ReportCreator creator = new ReportCreator("book");
 				if(creator.create()) {
-					//Report generated successfully
+					JOptionPane.showMessageDialog(null, "Report Created Successfully!");
+					reportCreationFrame.dispose();
 				}
 				else {
-					//Error generating report
+					JOptionPane.showMessageDialog(null, "Error Generating Report");
+					reportCreationFrame.dispose();
 				}
 			}
 		});
@@ -453,18 +746,27 @@ public class GUI {
 			public void actionPerformed(ActionEvent e) {
 				ReportCreator creator = new ReportCreator("users");
 				if(creator.create()) {
-					//Report generated successfully
+					JOptionPane.showMessageDialog(null, "Report Created Successfully");
+					reportCreationFrame.dispose();
 				}
 				else {
-					//Error generating report
+					JOptionPane.showMessageDialog(null, "Error Generating Report");
+					reportCreationFrame.dispose();
 				}
 			}
 		});
-		reportCreationPanel.add(userReportCreationButton);
-		reportCreationPanel.add(bookReportCreationButton);
+		c.insets = new Insets(5,5,5,5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		reportCreationPanel.add(userReportCreationButton, c);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		reportCreationPanel.add(bookReportCreationButton, c);
 		reportCreationFrame.setTitle("Create a Report");
 		reportCreationFrame.setVisible(true);
-		reportCreationFrame.setSize(500, 500);
+		reportCreationFrame.setSize(750, 750);
 		reportCreationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reportCreationFrame.add(reportCreationPanel);
 	}
