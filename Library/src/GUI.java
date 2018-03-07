@@ -126,32 +126,71 @@ public class GUI {
 					Book book = bookManager.getBook(barcodeNum);
 					if(book.isCheckedOut) {
 						bookInfoLabel.setText(book.title+", "+book.author);
+						bookInfoLabel.setFont(new Font("Arial", Font.BOLD, 15));
+						bookInfoLabel.setPreferredSize(new Dimension(175,75));
 						userInfoLabel.setText("Currently checked out by: "+book.getLastUser().firstName+" "+book.getLastUser().lastName+", "+book.getLastUser().getID());
-						windowPanel.add(bookInfoLabel);
-						windowPanel.add(userInfoLabel);
+						userInfoLabel.setFont(new Font("Arial", Font.BOLD, 15));
+						userInfoLabel.setPreferredSize(new Dimension(175,75));
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 5;
+						c.insets = new Insets(5,5,5,5);
+						windowPanel.add(bookInfoLabel, c);
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 6;
+						windowPanel.add(userInfoLabel, c);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
 					else if(book.isOnHold){
 						bookInfoLabel.setText(book.title+", "+book.author);
+						bookInfoLabel.setFont(new Font("Arial", Font.BOLD, 9));
+						bookInfoLabel.setPreferredSize(new Dimension(175,75));
 						userInfoLabel.setText("Currently on hold by: "+book.holdUser.firstName+" "+book.holdUser.lastName+", "+book.holdUser.getID());
-						windowPanel.add(bookInfoLabel);
-						windowPanel.add(userInfoLabel);
+						userInfoLabel.setFont(new Font("Arial", Font.BOLD, 9));
+						userInfoLabel.setPreferredSize(new Dimension(175,75));
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 5;
+						c.insets = new Insets(5,5,5,5);
+						windowPanel.add(bookInfoLabel, c);
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 6;
+						windowPanel.add(userInfoLabel, c);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
 					else {
 						bookInfoLabel.setText(book.title+", "+book.author);
+						bookInfoLabel.setFont(new Font("Arial", Font.BOLD, 9));
+						bookInfoLabel.setPreferredSize(new Dimension(175,75));
 						userInfoLabel.setText("Currently available.");
-						windowPanel.add(bookInfoLabel);
-						windowPanel.add(userInfoLabel);
+						userInfoLabel.setFont(new Font("Arial", Font.BOLD, 9));
+						userInfoLabel.setPreferredSize(new Dimension(175,75));
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 5;
+						c.insets = new Insets(5,5,5,5);
+						windowPanel.add(bookInfoLabel, c);
+						c.fill = GridBagConstraints.HORIZONTAL;
+						c.gridx = 1;
+						c.gridy = 6;
+						windowPanel.add(userInfoLabel, c);
 						windowFrame.setVisible(false);
 						windowFrame.setVisible(true);
 					}
 				}catch(Exception f) {
 					f.printStackTrace();
 					bookInfoLabel.setText("Book not found!");
-					windowPanel.add(bookInfoLabel);
+					bookInfoLabel.setFont(new Font("Arial", Font.BOLD, 9));
+					bookInfoLabel.setPreferredSize(new Dimension(175,75));
+					c.fill = GridBagConstraints.HORIZONTAL;
+					c.gridx = 1;
+					c.gridy = 5;
+					c.insets = new Insets(10,10,10,10);
+					windowPanel.add(bookInfoLabel, c);
 					windowFrame.setVisible(false);
 					windowFrame.setVisible(true);
 				}
@@ -254,6 +293,7 @@ public class GUI {
 					long barcode = Long.parseLong(barcodeTextField.getText());
 					Book book = new Book(barcode, nameTextField.getText(), authorTextField.getText());
 					bookManager.add(book);
+					JOptionPane.showMessageDialog(addBookFrame, "Book Added Successfully!");
 					addBookFrame.dispose();
 				}
 				else {
