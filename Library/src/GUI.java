@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -18,11 +19,16 @@ public class GUI {
 		bookManager = main.getGlobalBookManager();
 		userManager = main.getGlobalUserManager();
 	}
+	
+	public static Color lightBlue1 = new Color(0x00CCCC);
+	
 	public static void init() {
 		//TODO: have the barcode scanner start listening when on this screen
 		
 		JFrame windowFrame = new JFrame();
+		windowFrame.setBackground(Color.blue);
 		JPanel windowPanel = new JPanel(new GridBagLayout());
+		windowPanel.setBackground(lightBlue1);
 		GridBagConstraints c = new GridBagConstraints();
 		JButton addBookButton = new JButton();
 		addBookButton.setFont(new Font("Arial", Font.BOLD, 15));
@@ -222,11 +228,11 @@ public class GUI {
 		c.gridy = 1;
 		windowPanel.add(checkInButton, c);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 2;
 		windowPanel.add(reportCreationButton, c);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 3;
 		windowPanel.add(bookLookupLabel, c);
 		c.fill = GridBagConstraints.HORIZONTAL;
