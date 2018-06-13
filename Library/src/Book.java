@@ -5,10 +5,8 @@ public class Book {
 	public static long ISBN;
 	public static String title;
 	public static String author;
-	public static LocalDateTime lastCheckout;
 	public static User lastUser;
 	public static boolean isCheckedOut;
-	public static LocalDateTime dueDate;
 	public static boolean isOnHold;
 	public static User holdUser;
 	
@@ -20,12 +18,29 @@ public class Book {
 		this.title = title;
 		this.author = author;
 		
-		lastCheckout = null;
 		lastUser = null;
 		isCheckedOut = false;
-		dueDate = null;
 		isOnHold = false;
 		holdUser = null;
+	}
+	public Book(long ISBN, String title, String author, User lastUser, boolean isCheckedOut) {
+		this.ISBN = ISBN;
+		this.title = title;
+		this.author = author;
+		this.lastUser = lastUser;
+		this.isCheckedOut = isCheckedOut;
+		
+		isOnHold = false;
+		holdUser = null;
+	}
+	public Book(long ISBN, String title, String author, User lastUser, boolean isCheckedOut, boolean isOnHold, User holdUser) {
+		this.ISBN = ISBN;
+		this.title = title;
+		this.author = author;
+		this.lastUser = lastUser;
+		this.isCheckedOut = isCheckedOut;
+		this.isOnHold = isOnHold;
+		this.holdUser = holdUser;
 	}
 	public User getLastUser() {
 		return lastUser;
